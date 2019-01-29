@@ -97,14 +97,14 @@ namespace code_wars
 
         public static int ExpressionsMatter(int a, int b, int c)
         {
-            var arr = new int[] { a, b, c };
-            var max = arr.Max();
-            var min = arr.Min();
-            var avg = arr.Single(n => n > min && n < max);
+            if (a > 1 && b > 1 && c > 1)
+                return a * b * c;
+            if (a == 1)
+                return (a + b) * c;
+            if (b == 1)
+                return a > c ? a * (b + c) : (a + b) * c;
 
-            var multiply = min * avg * max;
-            var sort = (min + avg) * max;
-            return multiply > sort ? multiply : sort;
+            return a * (b + c);
         }
     }
 }
