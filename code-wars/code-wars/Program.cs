@@ -97,6 +97,7 @@ namespace code_wars
 
         public static int ExpressionsMatter(int a, int b, int c)
         {
+            if (a == 1 && c == 1) return a + b + c;
             if (a > 1 && b > 1 && c > 1)
                 return a * b * c;
             if (a == 1)
