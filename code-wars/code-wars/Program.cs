@@ -17,6 +17,8 @@ namespace code_wars
             //var logic = LogicalCalc(new bool[] { true, true, true, false }, "AND");
             //logic = LogicalCalc(new bool[] { true, true, true, false }, "OR");
             //logic = LogicalCalc(new bool[] { true, true, true, false }, "XOR");
+            var sttat = stat("01|15|59");
+            sttat = stat("");
         }
 
 
@@ -107,5 +109,58 @@ namespace code_wars
 
             return a * (b + c);
         }
+
+
+        public static string stat(string strg)
+        {
+            if (string.IsNullOrEmpty(strg)) return string.Empty;
+            // your code
+            var timess = new List<TimeSpan>();
+            foreach (var time in strg.Split(','))
+            {
+                var h = time.Split('|');
+                timess.Add(new TimeSpan(ConvertToInt(h[0]), ConvertToInt(h[1]), ConvertToInt(h[2])));
+            }
+            timess.Sort();
+
+            var rangeSpan = timess.Count == 1 ? timess[0] : (timess.Max() - timess.Min());
+            var range = (rangeSpan.Hours < 10 ? "0" + rangeSpan.Hours : rangeSpan.Hours.ToString()) + "|" +
+                (rangeSpan.Minutes < 10 ? "0" + rangeSpan.Minutes : rangeSpan.Minutes.ToString()) + "|" +
+                (rangeSpan.Seconds < 10 ? "0" + rangeSpan.Seconds : rangeSpan.Seconds.ToString());
+
+            long sum = 0;
+            timess.ForEach(a => sum += a.Ticks);
+
+            var averageSpan = new TimeSpan(sum / timess.Count);
+            var average = (averageSpan.Hours < 10 ? "0" + averageSpan.Hours : averageSpan.Hours.ToString()) + "|" +
+                (averageSpan.Minutes < 10 ? "0" + averageSpan.Minutes : averageSpan.Minutes.ToString()) + "|" +
+                (averageSpan.Seconds < 10 ? "0" + averageSpan.Seconds : averageSpan.Seconds.ToString());
+
+            var medianSpan = new TimeSpan();
+            if (timess.Count % 2 == 0)
+            {
+                medianSpan = new TimeSpan(((timess[(timess.Count / 2) - 1].Add(timess[timess.Count / 2])).Ticks) / 2);
+            }
+            else
+            {
+                medianSpan = timess[(timess.Count - 1) / 2];
+            }
+            var median = (medianSpan.Hours < 10 ? "0" + medianSpan.Hours : medianSpan.Hours.ToString()) + "|" +
+                (medianSpan.Minutes < 10 ? "0" + medianSpan.Minutes : medianSpan.Minutes.ToString()) + "|" +
+                (medianSpan.Seconds < 10 ? "0" + medianSpan.Seconds : medianSpan.Seconds.ToString());
+
+            return "Range: " + range + " Average: " + average + " Median: " + median;
+
+
+
+        }
+
+        static int ConvertToInt(string num)
+        {
+            var numm = 0;
+            int.TryParse(num, out numm);
+            return numm;
+        }
+
     }
 }
