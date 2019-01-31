@@ -17,8 +17,9 @@ namespace code_wars
             //var logic = LogicalCalc(new bool[] { true, true, true, false }, "AND");
             //logic = LogicalCalc(new bool[] { true, true, true, false }, "OR");
             //logic = LogicalCalc(new bool[] { true, true, true, false }, "XOR");
-            var sttat = stat("01|15|59");
-            sttat = stat("");
+            //var sttat = stat("01|15|59");
+            //sttat = stat("");
+            var r = Narcissistic(153);
         }
 
 
@@ -160,6 +161,14 @@ namespace code_wars
             var numm = 0;
             int.TryParse(num, out numm);
             return numm;
+        }
+
+        public static bool Narcissistic(int value)
+        {
+            var sum = 0.0;
+            var intArray = value.ToString().Select(x => Convert.ToInt32(x.ToString())).ToList();
+            intArray.ForEach(a => sum += Math.Pow(a, intArray.Count));
+            return sum == value;
         }
 
     }
